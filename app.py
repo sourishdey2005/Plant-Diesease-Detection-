@@ -40,7 +40,8 @@ from html_mardown import (
 gc.enable()
 
 # Hide warnings
-st.set_option("deprecation.showfileUploaderEncoding", False)
+# (Removed deprecated Streamlit option `deprecation.showfileUploaderEncoding`)
+# st.set_option("deprecation.showfileUploaderEncoding", False)
 
 import warnings
 warnings.filterwarnings("ignore")
