@@ -42,6 +42,9 @@ gc.enable()
 # Hide warnings
 st.set_option("deprecation.showfileUploaderEncoding", False)
 
+import warnings
+warnings.filterwarnings("ignore")
+
 # Configure page layout
 st.set_page_config(
     page_title="Cassava Disease Detection",
