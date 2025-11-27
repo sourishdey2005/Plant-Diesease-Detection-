@@ -3,6 +3,7 @@ from dataset import CassavaDataset, get_transforms, classes
 from inference import load_state, inference
 from utils import CFG
 from grad_cam import SaveFeatures, getCAM, plotGradCAM
+import os
 import gc
 import torch
 from torch.utils.data import DataLoader, Dataset
@@ -121,12 +122,28 @@ st.markdown('<div class="subheader-text">AI-Powered Plant Health Analysis</div>'
 # Set the directory path
 my_path = "."
 
-test = pd.read_csv(my_path + "/data/sample.csv")
+# Load sample data with error handling
+try:
+    test = pd.read_csv(my_path + "/data/sample.csv")
+except FileNotFoundError:
+    st.error("❌ Error: `data/sample.csv` file not found!")
+    st.info("Please ensure the following files exist in your project:")
+    st.write("- `data/sample.csv`")
+    st.write("- `images/img_1.jpg`, `images/img_2.jpg`, `images/img_3.jpg`")
+    st.write("- `images/banner.png`")
+    st.stop()
+
 img_1_path = my_path + "/images/img_1.jpg"
 img_2_path = my_path + "/images/img_2.jpg"
 img_3_path = my_path + "/images/img_3.jpg"
 banner_path = my_path + "/images/banner.png"
 output_image = my_path + "/images/gradcam2.png"
+
+# Verify image files exist
+for img_path in [img_1_path, img_2_path, img_3_path, banner_path]:
+    if not os.path.exists(img_path):
+        st.warning(f"⚠️ Warning: {img_path} not found")
+
 
 # Create sidebar with banner
 with st.sidebar:
